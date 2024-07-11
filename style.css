@@ -1,0 +1,687 @@
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.4s ease;
+}
+
+
+/* ===== Colours ===== */
+:root {
+    --body-color: #E4E9F7;
+    --nav-color: #4070F4;
+    --side-nav: #010718;
+    --text-color: #FFF;
+    --search-bar: #F2F2F2;
+    --search-text: #010718;
+}
+
+body {
+    height: 100vh;
+    overflow: scroll;
+    font-style: normal;
+    background-color: var(--body-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+body.dark {
+    --body-color: #18191A;
+    --nav-color: #242526;
+    --side-nav: #242526;
+    --text-color: #CCC;
+    --search-bar: #242526;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    background-color: var(--nav-color);
+    z-index: 100;
+}
+
+body.dark nav {
+    border: 1px solid #393838;
+
+}
+
+nav .nav-bar {
+    position: relative;
+    height: 100%;
+    max-width: 1000px;
+    width: 100%;
+    background-color: var(--nav-color);
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .nav-bar .sidebarOpen {
+    color: var(--text-color);
+    font-size: 25px;
+    padding: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+nav .nav-bar .logo a {
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.menu .logo-toggle {
+    display: none;
+}
+
+.nav-bar .nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar .nav-links li {
+    margin: 0 5px;
+    list-style: none;
+}
+
+.nav-links li a {
+    position: relative;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px;
+}
+
+.nav-links li a::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-links li:hover a::before {
+    opacity: 1;
+}
+
+.nav-bar .darkLight-searchBox {
+    display: flex;
+    align-items: center;
+}
+
+.darkLight-searchBox .dark-light,
+.darkLight-searchBox .searchToggle {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+.dark-light i,
+.searchToggle i {
+    position: absolute;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dark-light i.sun {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dark-light.active i.sun {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dark-light.active i.moon {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchToggle i.cancel {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchToggle.active i.cancel {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.searchToggle.active i.search {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchBox {
+    position: relative;
+}
+
+.searchBox .search-field {
+    position: absolute;
+    bottom: -85px;
+    right: 5px;
+    height: 50px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background-color: var(--nav-color);
+    padding: 3px;
+    border-radius: 6px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.searchToggle.active~.search-field {
+    bottom: -74px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-field::before {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: -4px;
+    height: 12px;
+    width: 12px;
+    background-color: var(--nav-color);
+    transform: rotate(-45deg);
+    z-index: -1;
+}
+
+.search-field input {
+    height: 100%;
+    width: 100%;
+    padding: 0 45px 0 15px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--search-text);
+    background-color: var(--search-bar);
+}
+
+body.dark .search-field input {
+    color: var(--text-color);
+}
+
+.search-field i {
+    position: absolute;
+    color: var(--nav-color);
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+body.dark .search-field i {
+    color: var(--text-color);
+}
+
+@media (max-width: 790px) {
+    nav .nav-bar .sidebarOpen {
+        display: block;
+    }
+
+    .menu {
+        position: fixed;
+        height: 100%;
+        width: 320px;
+        left: -100%;
+        top: 0;
+        padding: 20px;
+        background-color: var(--side-nav);
+        z-index: 100;
+        transition: all 0.4s ease;
+    }
+
+    nav.active .menu {
+        left: -0%;
+    }
+
+    nav.active .nav-bar .navLogo a {
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .menu .logo-toggle {
+        display: block;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo-toggle .siderbarClose {
+        color: var(--text-color);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .nav-bar .nav-links {
+        flex-direction: column;
+        padding-top: 30px;
+    }
+
+    .nav-links li a {
+        display: block;
+        margin-top: 20px;
+    }
+}
+
+/* secation */
+
+
+.main {
+    margin-top: 120px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.left {
+
+    width: 400px;
+    height: 500px;
+}
+
+
+
+.right {
+    margin-left: 10px;
+    width: 400px;
+    /* height: 600px; */
+}
+
+.right p {
+    width: fit-content;
+    
+}
+#welcome{
+ margin-left: 25px ;
+}
+
+button {
+    width: 150px;
+    margin: 10px;
+    height: 40px;
+    border-radius: 20px;
+    color: red;
+}
+
+#btn:hover {
+    color: #000;
+    background: #abdeee;
+}
+
+.page1 {
+
+    width: 100%;
+    height: 90%;
+    margin-top: 20px;
+}
+
+.page1>h1 {
+    text-align: center;
+    padding-top: 50px;
+
+}
+
+.box {
+    margin-top: 140px;
+    margin-left: 30px;
+    border-radius: 15px;
+    padding: 20px;
+    border: 5px solid rgb(146, 216, 238);
+    height: 350px;
+}
+
+.box a {
+    text-decoration: none;
+
+}
+
+ul li {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 25px;
+}
+
+
+/* nav */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navtabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.navtab {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.navtab:hover {
+    color: #007BFF;
+}
+
+.navtab.active {
+    color: #007BFF;
+    font-weight: 600;
+}
+
+.underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: #007BFF;
+    transition: left 0.3s ease, width 0.3s ease;
+}
+
+.content {
+    display: none;
+    padding: 100px 20px 20px;
+    max-width: 800px;
+    text-align: center;
+}
+
+.content.active {
+    display: block;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #000;
+    transition: color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer a {
+    background: linear-gradient(145deg, #007aff, #005bb5);
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer a:hover {
+    color: linear-gradient(145deg, #007aff, #005bb5);
+}
+
+
+/* contact */
+html,
+body {
+    padding: 0;
+}
+
+body {
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    background-color: #f2f1f3;
+}
+
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
+/* body */
+.code__body {
+    display: inline-block;
+    width: 100%;
+    padding: 0 8.5%;
+}
+
+.code_body_product {
+    display: inline-block;
+    width: 100%;
+}
+
+.code_bodyproduct_title {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.code_bodyproduct_title h1 {
+    font-family: 'Yatra One', cursive;
+    display: inline-block;
+    background-color: #511e78;
+    padding: 5px 10px;
+    color: white;
+    box-shadow: 0px 2px 18px #511e78;
+    transform: rotate(-3deg);
+}
+
+.code__about {
+    display: inline-block;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.code_card_profile {
+    display: inline-block;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 38px #949393;
+}
+
+.code_cardhead_data {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 10px;
+    padding-top: 13px;
+}
+
+.code_cardhead_data ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.code_cardhead_data ul li {
+    display: inline-block;
+}
+
+.code_cardhead_data ul li:nth-child(1) a {
+    display: inline-block;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #511e78;
+}
+
+.code_cardhead_data ul li:nth-child(1) a img {
+    width: 100%;
+    height: 100%;
+}
+
+.code_cardheaddata ul li:nth-child(2) a,
+.codecardhead_data ul li:nth-child(2) a:hover {
+    display: inline-block;
+    vertical-align: bottom;
+    padding-left: 5px;
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+}
+
+.code_cardhead_data ul li:nth-child(2) p {
+    margin: 0;
+    padding-left: 5px;
+}
+
+.code_cardbody_image img {
+    width: 100%;
+    height: 100%;
+}
+
+.code_about_decription {
+    display: inline-block;
+    /* padding: 4% 13%; */
+}
+
+.code_aboutdecription_tittle h1 {
+    display: inline-block;
+    max-width: 250px;
+    font-family: 'Yatra One', cursive;
+    color: #511e78;
+}
+
+.code_about_decription p {
+    font-weight: 600;
+    color: #464545;
+}
+
+.code_cardfooter_descripsi {
+    display: inline-block;
+    padding: 7px 10px;
+}
+
+.code_cardfooter_descripsi p {
+    margin: 0;
+}
+
+.code--mod--padding {
+    padding: 11px;
+}
+
+.code_bennerparalax_image {
+    background-image: url('../images/bg-paralax.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+}
+
+.code__benner {
+    display: inline-block;
+    width: 100%;
+    margin: 5% 0;
+}
+
+.code_benner_paralax {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.code_benner_title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+}
+
+.code_benner_title h1 {
+    font-size: 50px;
+    color: white;
+    font-family: 'Yatra One', cursive;
+    background-color: #511e78;
+    padding: 5px 10px;
+}
+
+.code_benner_title p {
+    color: white;
+    background-color: #511e78;
+    padding: 5px 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 340px;
+    margin: 0 auto;
+}
+
+/* end body */
+
+
+.jk {
+    position: relative;
+    height: 20vh;
+    width: 50vw;
+    display: grid;
+    place-items: center;
+}
+
+.typing {
+    display: block;
+    color: #1f2020;
+}
+
+.typing::after {
+    content: '';
+    height: 50%;
+    padding: 2px;
+    margin-left: 5px;
+    background-color: #05ccc2;
+    animation: typing 1.2s ease infinite;
+}
+
+span.typed-cursor {
+    display: none;
+}
+
+
+@keyframes typing {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
